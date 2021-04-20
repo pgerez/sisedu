@@ -1,0 +1,99 @@
+security:
+    #acl:
+    #    connection: default
+
+    firewalls:
+        # Disabling the security for the web debug toolbar, the profiler and Assetic.
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        # -> custom firewall for the admin area of the URL
+        admin:
+            pattern:            /admin(.*)
+            context:            user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+                failure_path:   null
+                always_use_default_target_path: false
+                default_target_path: /admin/dashboard
+            logout:
+                path:           /admin/logout
+                target:         /admin/login
+            anonymous:          true
+
+        # -> end custom configuration
+
+        # default login area for standard users
+
+        # This firewall is used to handle the public login area
+        # This part is handled by the FOS User Bundle
+        main:
+            # anonymous: lazy
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+            
+            pattern: ^/
+            context: sitecontext
+            user_checker: security.user_checker
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+
+            logout:       true
+            anonymous:    true
+
+    
+    role_hierarchy:
+        # for convenience, I decided to gather Sonata roles here
+        ROLE_SICER_READER:
+            - ROLE_ADMIN_ALUMNO_LIST
+            - ROLE_ADMIN_ALUMNO_VIEW
+        ROLE_SONATA_SICER_EDITOR:
+            - ROLE_ADMIN_APP_ALUMNO_CREATE
+            - ROLE_ADMIN_APP_ALUMNO_EDIT
+        ROLE_SONATA_SICER_ADMIN:
+            - ROLE_ADMIN_APP_ALUMNO_DELETE
+            - ROLE_ADMIN_APP_ALUMNO_EXPORT
+    
+
+        # those are the roles I will use (less verbose)
+        #ROLE_STAFF:             [ROLE_USER, ROLE_SONATA_FOO_READER]
+        #ROLE_ADMIN:             [ROLE_STAFF, ROLE_SONATA_FOO_EDITOR, ROLE_SONATA_FOO_ADMIN]
+        #ROLE_SUPER_ADMIN:       [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+        # you could alternatively use for an admin who has all rights
+        #ROLE_ALL_ADMIN:         [ROLE_STAFF, ROLE_SONATA_FOO_ALL]
+
+
+
+        ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_CERTIFICADO: [ROLE_USER, ROLE_SONATA_ADMIN, ROLE_CERTIFICADO]
+        SONATA:
+            - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    access_control:
+        # Admin login page needs to be accessed without credential
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Secured part of the site
+        # This config requires being logged for the whole site and having the admin role for the admin part.
+        # Change these rules to adapt them to your needs
+        - { path: ^/admin/, role: [ROLE_USER] }
+        - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }

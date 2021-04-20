@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse">
+        <a class="navbar-brand" href="">
+          {#<img src="{{ asset('escudo.jpg', 'imagenes') }}" width="20" height="30" class="d-inline-block align-top" alt="">#}
+          Bachillerato Humanista
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+            {{ knp_menu_render('main', {'template':'menu/b4menu.html.twig'}) }}
+            </div>
+      </div>  
+    </nav>
+    <main role="main" class="container">
+    {% block alerts %}
+      {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="alert-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+    {% block body %}{% endblock %}
+    </main>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+  </body>
+</html>
+{# kate: tab-width 2 #}

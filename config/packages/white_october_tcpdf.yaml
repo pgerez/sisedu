@@ -1,0 +1,5 @@
+white_october_tcpdf:
+    tcpdf:
+        k_title_magnification: 2
+##custom TCPDF-based class
+    class: 'App\CertPDF'

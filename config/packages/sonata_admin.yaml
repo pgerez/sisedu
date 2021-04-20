@@ -1,0 +1,55 @@
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
+    title: 'SiCer'
+    title_logo : /images/logohome.png
+    options:
+           use_select2:    false # disable select2
+    dashboard:
+        groups:
+            admin:
+                label: 'Administracion'
+                icon: '<i class="fa fa-graduation-cap"></i>'
+                items:  
+                    - admin.alumno                      
+                    - admin.tutor
+                    - admin.aula
+                    - admin.certificado
+                    - admin.nota
+                #roles: [ROLE_ADMINISTRACION]
+            admin1:
+                label: 'Configuracion'
+                icon: '<i class="fa fa-cogs"></i>'
+                items:  
+                    - admin.tipocertificado
+                    - admin.seccion
+                    - admin.ciclolectivo
+                    - admin.modalidad
+                    - admin.planestudio
+                    - admin.materia
+                    - admin.regimen
+                    - admin.periodo
+                    - admin.tipo_nota
+                    - admin.localidad
+
+                #roles: [ROLE_ADMIN_CONFIG]    
+                    
+            admin2:
+                label: 'Gestion de Usuarios'
+                icon: '<i class="fa fa-user"></i>'
+                items:
+                    - sonata.user.admin.user
+                    - sonata.user.admin.group
+                roles: [ROLE_SUPER_ADMIN]
+        blocks:
+           - { type: sonata.admin.block.admin_list, position: left }
+    assets:
+        # stylesheet paths to add to the page in addition to the list above
+        extra_stylesheets: ['theme/css/bootstrap-tagsinput.css']
+        # javascript paths to add to the page in addition to the list above
+        extra_javascripts: ['theme/js/bootstrap-tagsinput.js']
+        
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

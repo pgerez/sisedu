@@ -1,0 +1,23 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes:
+        - '@SonataCore\Form\datepicker.html.twig'
+        #- 'Form\email.html.twig'
+        #- DependentSelectBundle::fields.html.twig
+        #- ApplicationToolsBundle:Form:dependent_filtered_entity_widget.html.twig
+        #- ApplicationToolsBundle:Form:editable_combobox_widget.html.twig
+        #- ApplicationToolsBundle:Form:formfield_cloacker_widget.html.twig
+        #- ApplicationToolsBundle:Form:file_field_ext.html.twig     
+        
+
+    #dependent_select:
+    #    materia_by_aulas:
+    #        class: App:Entity:Materia
+    #        parent_property: aulaMateria
+    #        property: title
+    #        role: ROLE_USER
+    #        no_result_msg: 'No hay materias'
+    #        order_property: title
+    #        order_direction: ASC

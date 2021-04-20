@@ -1,0 +1,18 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+sonata_user_admin_security:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
+    prefix: /admin
+
+sonata_user_admin_resetting:
+    resource: '@SonataUserBundle/Resources/config/routing/admin_resetting.xml'
+    prefix: /admin/resetting
+
+#ApplicationToolsBundle:
+#    resource: "@ApplicationToolsBundle/Resources/config/routing.yml"
+#   prefix: /
+
+#dependent_select:
+#    resource: '@DependentSelectBundle/Resources/config/routing.xml'

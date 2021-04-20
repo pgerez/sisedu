@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %}Validar Certificado{% endblock %}
+
+{% block body %}
+<section class="banners py-5">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-12">
+    <form name="validar" id="validar" src="http://localhost:8000/verificarcertificado" method="GET">
+      <div class="form-group">
+        <label for="exampleInputEmail1">DNI</label>
+        <input type="text" class="form-control" name="dni" aria-describedby="dniHelp" placeholder="Ingrese dni del alumno" value="{{dni}}">
+      </div>
+      <div class="form-group">
+        <label for="codigo">CODIGO</label>
+        <input type="text" class="form-control" name="codigo" placeholder="XXXXXX" value="{{codigo}}">
+        <small id="dni" class="form-text text-muted">Ingrese los caracteres que figuran debajo del codgio QR.</small>
+      </div>
+      <button type="submit" class="btn btn-primary">Verificar</button>
+    </form>
+    </div>
+  </div><br>
+  <div class="row">
+    <div class="col-12 col-md-12">
+      
+      {% if resultado.alumno is defined %}
+          {% if resultado.deshabilitado == 0 %}
+            {% if "now"|date('Y-m-d') <= resultado.fechaExpiracion|date('Y-m-d') %}
+              <div class="alert alert-success" role="alert"><i class="fa fa-check-circle" aria-hidden="true"></i>
+              Certificado Valido</div>
+            {% else %}
+              <div class="alert alert-primary" role="alert"><i class="fa fa-calendar" aria-hidden="true"></i>
+              Certificado No Vigente</div>
+            {% endif %}
+          {% else %}
+          <div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          Certificado Deshabilitado</div>
+          {% endif %}
+          <div class="alert alert-dark" role="alert">
+               {{ resultado.tipocertificado }}<br>
+               {{ resultado.fechaCreacion|date("d/m/Y") }}<br>
+               {{ resultado.alumno }}<br>
+               {{ resultado.alumno.dni }}<br>   
+          </div>
+      {% elseif resultado == null %}
+          <div class="alert alert-danger" role="alert"><i class="fa fa-times-circle" aria-hidden="true"></i> Certificado no Valido!</div>
+      {% endif %}
+    </div>  
+  </div>
+</div>
+</section>
+
+{% endblock %}
+

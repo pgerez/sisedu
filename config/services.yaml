@@ -1,0 +1,230 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    attachment: '%env(ATTACHMENT)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    #
+    WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
+    
+    ####toolsBundle
+    #application_tools.type.dependent_filtered_entity:
+    #    public: true
+    #    class: App\Application\ToolsBundle\Form\Type\DependentFilteredEntityType
+    #    arguments: ["@doctrine", "@property_accessor"]
+    #    tags:
+    #        - { name: form.type, alias: apptools_dependent_filtered_entity }
+        
+    #application_tools.dependent_filtered_entity_subscriber:
+    #    public: true
+    #    class: App\Application\ToolsBundle\Form\EventListener\DependentFilteredEntitySubscriber
+    #    arguments: ["@property_accessor"]
+    #    tags:
+    #        - { name: form.type, alias: apptools_dependent_filtered_entity_subscriber }
+
+# MENU SERVICES
+#
+    app.menu_builder:
+        class: App\Menu\MenuBuilder
+        arguments: ["@security.token_storage", "@knp_menu.factory", "@request_stack"]
+        tags:
+            - { name: knp_menu.menu_builder, method: createMainMenu, alias: main } # The alias is what is used to retrieve the menu
+###################### ADMIN 
+    admin.tutor:
+        class: App\Admin\TutorAdmin
+        arguments: [~, App\Entity\Tutor, App\Controller\TutorAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tutor }
+        public: true
+
+    admin.alumno:
+        class: App\Admin\AlumnoAdmin
+        arguments: [~, App\Entity\Alumno, App\Controller\AlumnoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Alumno }
+        public: true
+
+    admin.alumno_tutor:
+        class: App\Admin\AlumnoTutorAdmin
+        arguments: [~, App\Entity\AlumnoTutor, App\Controller\AlumnoTutorAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AlumnoTutor }
+        public: true
+
+    admin.certificado:
+        class: App\Admin\CertificadoAdmin
+        arguments: [~, App\Entity\Certificado, App\Controller\CertificadoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Certificado }
+        public: true
+
+    admin.tipocertificado:
+        class: App\Admin\TipocertificadoAdmin
+        arguments: [~, App\Entity\Tipocertificado, App\Controller\TipocertificadoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tipocertificado }
+        public: true
+
+    admin.ciclolectivo:
+        class: App\Admin\CiclolectivoAdmin
+        arguments: [~, App\Entity\Ciclolectivo, App\Controller\CiclolectivoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Ciclolectivo }
+        public: true
+
+    admin.aula:
+        class: App\Admin\AulaAdmin
+        arguments: [~, App\Entity\Aula, App\Controller\AulaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Aula }
+        public: true
+        calls:
+            - [ addChild, ["@admin.materia_aula"]]
+            - [ addChild, ["@admin.aula_alumno"]]
+
+
+    admin.seccion:
+        class: App\Admin\SeccionAdmin
+        arguments: [~, App\Entity\Seccion, App\Controller\SeccionAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Seccion }
+        public: true
+
+    admin.aula_alumno:
+        class: App\Admin\AulaAlumnoAdmin
+        arguments: [~, App\Entity\AulaAlumno, App\Controller\AulaAlumnoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AulaAlumno }
+        public: true
+
+    admin.modalidad:
+        class: App\Admin\ModalidadAdmin
+        arguments: [~, App\Entity\Modalidad, App\Controller\ModalidadAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Modalidad }
+        public: true
+
+    admin.periodo:
+        class: App\Admin\PeriodoAdmin
+        arguments: [~, App\Entity\Periodo, App\Controller\PeriodoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Periodo }
+        public: true
+
+    admin.materia:
+        class: App\Admin\MateriaAdmin
+        arguments: [~, App\Entity\Materia, App\Controller\MateriaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Materia }
+        public: true
+
+    admin.nota:
+        class: App\Admin\NotaAdmin
+        arguments: [~, App\Entity\Nota, App\Controller\NotaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Nota }
+        public: true
+
+    admin.nota_alumno:
+        class: App\Admin\NotaAlumnoAdmin
+        arguments: [~, App\Entity\NotaAlumno, App\Controller\NotaAlumnoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: NotaAlumno }
+        public: true
+
+    admin.planestudio:
+        class: App\Admin\PlanestudioAdmin
+        arguments: [~, App\Entity\Planestudio, App\Controller\PlanestudioAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Planestudio }
+        public: true
+        calls:
+            - [ addChild, ["@admin.anio"]]
+
+    admin.anio:
+        class: App\Admin\AnioAdmin
+        arguments: [~, App\Entity\Anio, App\Controller\AnioAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Anio }
+        public: true
+        
+
+    admin.anio_materia:
+        class: App\Admin\AnioMateriaAdmin
+        arguments: [~, App\Entity\AnioMateria, App\Controller\AnioMateriaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AnioMateria }
+        public: true
+
+    admin.planestudio_ciclolectivo:
+        class: App\Admin\PlanestudioCiclolectivoAdmin
+        arguments: [~, App\Entity\PlanestudioCiclolectivo, App\Controller\PlanestudioCiclolectivoAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: PlanestudioCiclolectivo }
+        public: true
+
+    admin.regimen:
+        class: App\Admin\RegimenAdmin
+        arguments: [~, App\Entity\Regimen, App\Controller\RegimenAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Regimen }
+        public: true
+
+    admin.materia_aula:
+        class: App\Admin\MateriaAulaAdmin
+        arguments: [~, App\Entity\MateriaAula, App\Controller\MateriaAulaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: MateriaAula }
+        public: true
+        calls:
+            - [ addChild, ["@admin.nota"]]
+
+    admin.docente:
+        class: App\Admin\DocenteAdmin
+        arguments: [~, App\Entity\Docente, App\Controller\DocenteAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Docente }
+        public: true
+
+    admin.tipo_nota:
+        class: App\Admin\TipoNotaAdmin
+        arguments: [~, App\Entity\TipoNota, App\Controller\TipoNotaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TipoNota }
+        public: true
+
+    admin.escala:
+        class: App\Admin\EscalaAdmin
+        arguments: [~, App\Entity\Escala, App\Controller\EscalaAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Escala }
+        public: true
+
+    admin.localidad:
+        class: App\Admin\LocalidadAdmin
+        arguments: [~, App\Entity\Localidad, App\Controller\LocalidadAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Localidad }
+        public: true
