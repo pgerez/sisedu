@@ -114,6 +114,11 @@ class Alumno
      */
     private $lugar_nacimiento;
 
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $cuit;
+
 
 
     public function __construct()
@@ -414,6 +419,18 @@ class Alumno
     public function setLugarNacimiento(?string $lugar_nacimiento): self
     {
         $this->lugar_nacimiento = $lugar_nacimiento;
+
+        return $this;
+    }
+
+    public function getCuit(): ?string
+    {
+        return $this->cuit;
+    }
+
+    public function setCuit(?string $cuit): self
+    {
+        $this->cuit = $cuit;
 
         return $this;
     }
