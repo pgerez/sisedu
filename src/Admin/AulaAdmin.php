@@ -16,6 +16,9 @@ use App\Entity\MateriaAula;
 final class AulaAdmin extends AbstractAdmin
 {
 
+    public function  configure(){
+        $this->parentAssociationMapping = 'ciclolectivo';
+    }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {

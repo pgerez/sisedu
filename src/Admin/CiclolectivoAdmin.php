@@ -38,6 +38,7 @@ final class CiclolectivoAdmin extends AbstractAdmin
                     'show' => [],
                     'edit' => [],
                     'delete' => [],
+                    'aulalist' => ['template' => 'aulaAdmin/aula_list.html.twig'],
                 ],
             ]);
     }

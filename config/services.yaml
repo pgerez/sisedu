@@ -93,6 +93,8 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Ciclolectivo }
         public: true
+        calls:
+            - [ addChild, ["@admin.aula"]]
 
     admin.aula:
         class: App\Admin\AulaAdmin
@@ -103,7 +105,6 @@ services:
         calls:
             - [ addChild, ["@admin.materia_aula"]]
             - [ addChild, ["@admin.aula_alumno"]]
-
 
     admin.seccion:
         class: App\Admin\SeccionAdmin

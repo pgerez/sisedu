@@ -109,6 +109,11 @@ class Alumno
      */
     private $observacion;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lugar_nacimiento;
+
 
 
     public function __construct()
@@ -397,6 +402,18 @@ class Alumno
     public function setCertificadoTitulo(?string $certificado_titulo): self
     {
         $this->certificado_titulo = $certificado_titulo;
+
+        return $this;
+    }
+
+    public function getLugarNacimiento(): ?string
+    {
+        return $this->lugar_nacimiento;
+    }
+
+    public function setLugarNacimiento(?string $lugar_nacimiento): self
+    {
+        $this->lugar_nacimiento = $lugar_nacimiento;
 
         return $this;
     }

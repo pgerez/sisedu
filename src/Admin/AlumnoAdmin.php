@@ -71,6 +71,7 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('telefono')
             ->add('email')
             ->add('fecha_nacimiento', DatePickerType::class, ['format' => 'd/M/y'])
+            ->add('lugar_nacimiento', null, ['label' => 'Lugar de Nacimiento'])
             ->add('fecha_ingreso', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('legajo')
             ->add('localidad')
