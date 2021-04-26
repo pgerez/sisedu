@@ -62,6 +62,7 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('nombre')
             ->add('apellido')
             ->add('dni')
+            ->add('cuit')
             ->add('genero', ChoiceType::class, [
                 'choices' => [
                     'Masculino' => '1',
