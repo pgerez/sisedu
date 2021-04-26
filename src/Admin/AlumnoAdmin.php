@@ -59,8 +59,8 @@ final class AlumnoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
-            ->add('nombre')
             ->add('apellido')
+            ->add('nombre')
             ->add('dni')
             ->add('cuit')
             ->add('genero', ChoiceType::class, [
