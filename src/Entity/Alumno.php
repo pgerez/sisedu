@@ -119,6 +119,11 @@ class Alumno
      */
     private $cuit;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $materia_adeudada;
+
 
 
     public function __construct()
@@ -431,6 +436,18 @@ class Alumno
     public function setCuit(?string $cuit): self
     {
         $this->cuit = $cuit;
+
+        return $this;
+    }
+
+    public function getMateriaAdeudada(): ?string
+    {
+        return $this->materia_adeudada;
+    }
+
+    public function setMateriaAdeudada(?string $materia_adeudada): self
+    {
+        $this->materia_adeudada = $materia_adeudada;
 
         return $this;
     }
