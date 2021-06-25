@@ -1,0 +1,59 @@
+{% extends '@SonataAdmin/CRUD/base_show_field.html.twig' %} 
+
+{% set cl = {'00' : 'success', 999 : 'primary', 3 : 'danger', 4 : 'info', 5 : 'warning', 6 : 'danger', 7 : 'success'} %}
+{% block field%}
+    {# object.venta.financiacion.cuotas #}
+<table class="table table-bordered table-striped">
+        {% for aulaalumno in object.aulaAlumnos %}
+                <tbody>
+                    <tr>
+                        <th colspan="9" style="text-align:center" bgcolor="#16aebe"><h3>{{aulaalumno.aula.numero}}º Año</h3><br>{{aulaalumno.aula.anio.planestudio}}</th>
+                    </tr>
+                </tbody>
+                {% for key, materia in aulaalumno.aula.showArray %}
+                {% set i = 0 %}
+                {% set a = 0 %}
+                {% set td = '' %}
+                <tbody>
+                <tr>
+                    <th colspan="8"><h3>{{key}}</h3></th>
+                </tr>
+                <tr>
+                    <th bgcolor="#adb5bd">Alumno</th>
+                    {% set per = [] %}
+                    {% for key, periodo in materia %}
+                        
+                        {% for key, nota in periodo %}
+                                {% if (key not in per) %}
+                                    
+                                        <th bgcolor="#adb5bd">{{key}}</th>
+                                      
+                                    {% set per = per|merge([key]) %}
+                                {% endif %}
+                        {% endfor %}
+                        
+                    {% endfor %}
+                </tr>
+                </tbody>
+                    {% for key, periodo in materia %}
+                        {% if (key == (object.apellido ~' '~ object.nombre)) %}
+                        <tr>
+                            {% if i == 0 %}
+                                <td>{{key}}</td>
+                                {% set i = 1 %}    
+                            {% endif %}
+                        {% for key, nota in periodo %}
+                            {% if (key == 'Final' and nota < 6) %}
+                            {% set td = 'bgcolor="#0dcaf0"' %}
+                            {% endif %}
+                            <td {{ td }} ><strong>{{nota}}</strong></td>
+                        {% endfor %}
+                        </tr>
+                        {% endif %}   
+                        {% set i = 0 %}
+                    {% endfor %}
+                        {% set a = 0 %}
+                {% endfor %}
+            {% endfor %}
+    </table>
+{% endblock%}
