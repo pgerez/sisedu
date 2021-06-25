@@ -59,6 +59,12 @@ class Alumno
      */
     private $alumnoTutors;
 
+     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\NotaAlumno", mappedBy="alumno", cascade={"all"}, orphanRemoval=true)
+     *
+     */
+    private $notaalumnos;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Certificado", mappedBy="alumno", cascade={"all"}, orphanRemoval=true)
      */
@@ -131,6 +137,7 @@ class Alumno
         $this->alumnoTutors = new ArrayCollection();
         $this->certificados = new ArrayCollection();
         $this->aulaAlumnos = new ArrayCollection();
+        $this->notaalumnos = new ArrayCollection();
     }
 
     public function __toString(){
@@ -448,6 +455,37 @@ class Alumno
     public function setMateriaAdeudada(?string $materia_adeudada): self
     {
         $this->materia_adeudada = $materia_adeudada;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|NotaAlumno[]
+     */
+    public function getNotaalumnos(): Collection
+    {
+        return $this->notaalumnos;
+    }
+
+    public function addNotaalumno(NotaAlumno $notaalumno): self
+    {
+        if (!$this->notaalumnos->contains($notaalumno)) {
+            $this->notaalumnos[] = $notaalumno;
+            $notaalumno->setAlumno($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotaalumno(NotaAlumno $notaalumno): self
+    {
+        if ($this->notaalumnos->contains($notaalumno)) {
+            $this->notaalumnos->removeElement($notaalumno);
+            // set the owning side to null (unless already changed)
+            if ($notaalumno->getAlumno() === $this) {
+                $notaalumno->setAlumno(null);
+            }
+        }
 
         return $this;
     }

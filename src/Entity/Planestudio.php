@@ -44,7 +44,7 @@ class Planestudio
     private $planestudioCliclolectivos;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $codigo;
 
@@ -162,17 +162,18 @@ class Planestudio
         return $this;
     }
 
-    public function getCodigo(): ?int
+    public function getCodigo(): ?string
     {
         return $this->codigo;
     }
 
-    public function setCodigo(?int $codigo): self
+    public function setCodigo(?string $codigo): self
     {
         $this->codigo = $codigo;
 
         return $this;
     }
+
 
    
 }

@@ -19,22 +19,31 @@ class MateriaAulaRepository extends ServiceEntityRepository
         parent::__construct($registry, MateriaAula::class);
     }
 
-    // /**
-    //  * @return MateriaAula[] Returns an array of MateriaAula objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return MateriaAula[] Returns an array of MateriaAula objects
+      */
+    
+    public function findByCodmateriaCursoPlanYear($col1,$col2,$col3,$col13)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            ->Join('m.aniomateria', 'am', 'WITH', 'am.id = m.aniomateria')
+            ->Join('m.aula', 'a', 'WITH', 'a.id = m.aula')
+            ->Join('a.anio', 'an', 'WITH', 'an.id = a.anio')
+            ->Join('a.ciclolectivo', 'c', 'WITH', 'c.id = a.ciclolectivo')
+            ->Join('an.planestudio', 'p', 'WITH', 'p.id = an.planestudio')
+            ->andWhere('am.codigo = :codmateria')
+            ->andWhere('a.numero = :curso')
+            ->andWhere('p.codigo = :plan')
+            ->andWhere('c.year = :year')
+            ->setParameter('codmateria', $col1)
+            ->setParameter('curso', $col2)
+            ->setParameter('plan', $col3)
+            ->setParameter('year', $col13)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?MateriaAula

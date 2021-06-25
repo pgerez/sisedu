@@ -10,13 +10,18 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\CollectionType;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 
 final class AlumnoAdmin extends AbstractAdmin
 {
-    
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        #$collection->add('academica', $this->getRouterIdParameter().'/academica');
+    }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
@@ -24,7 +29,7 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('nombre')
             ->add('apellido')
             ->add('dni')
-            ->add('aulaAlumnos.aula',null, ['label' => 'Aula/Curso'])
+            #->add('aulaAlumnos.aula',null, ['label' => 'Aula/Curso'])
             ->add('genero', null, array(), ChoiceType::class, [
                 'choices' => [
                     'Masculino' => '1',
@@ -49,9 +54,10 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('alumnoTutors', null, ['label'=>'Tutor'])
             ->add('_action', null, [
                 'actions' => [
-                    'show' => [],
+                    'show' => ['label' => 'Academica'],
                     'edit' => [],
                     'delete' => [],
+                    #'Academica'  => ['template' => 'botones/academica.html.twig'],
                 ],
             ]);
     }
@@ -96,13 +102,8 @@ final class AlumnoAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper): void
     {
         $showMapper
-            ->add('id')
-            ->add('nombre')
-            ->add('apellido')
-            ->add('dni')
-            ->add('domicilio')
-            ->add('telefono')
-            ->add('email')
+            #->add('id')
+            ->add('academica', null, array('template' => 'Alumno/academica.html.twig'))
             
             ;
     }

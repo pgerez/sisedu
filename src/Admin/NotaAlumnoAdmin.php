@@ -53,6 +53,7 @@ final class NotaAlumnoAdmin extends AbstractAdmin
                         ->andWhere('e.tipo_nota = '.$this->getSubject()->getTipoNota()->getId());
                         #->orderBy('u.username', 'ASC');
                 },])
+            ->add('nota')
             ->add('libro')
             ->add('folio')
             ;

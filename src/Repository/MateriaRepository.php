@@ -19,22 +19,22 @@ class MateriaRepository extends ServiceEntityRepository
         parent::__construct($registry, Materia::class);
     }
 
-    // /**
-    //  * @return Materia[] Returns an array of Materia objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Materia[] Returns an array of Materia objects
+     */
+   
+    public function findNombre($value)
     {
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
+            ->andWhere('m.nombre = :val')
             ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
+            #->orderBy('m.id', 'ASC')
+            #->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
+ 
 
     /*
     public function findOneBySomeField($value): ?Materia

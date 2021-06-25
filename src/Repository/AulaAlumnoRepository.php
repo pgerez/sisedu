@@ -19,22 +19,24 @@ class AulaAlumnoRepository extends ServiceEntityRepository
         parent::__construct($registry, AulaAlumno::class);
     }
 
-    // /**
-    //  * @return AulaAlumno[] Returns an array of AulaAlumno objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return AulaAlumno[] Returns an array of AulaAlumno objects
+      */
+    
+    public function findDni($aula, $alumno)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.aula = :aula')
+            ->andWhere('a.alumno = :alumno')
+            ->setParameter('aula', $aula)
+            ->setParameter('alumno', $alumno)
+            #->orderBy('a.id', 'ASC')
+            #->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?AulaAlumno

@@ -59,14 +59,14 @@ final class AulaAdmin extends AbstractAdmin
                     '6' => '6°',
                     '7' => '7°'
                 ]])
-            ->add('tipoaula', 'choice', [
-                'choices' => [
-                    '1' => 'Grado',
-                    '2' => 'Año'
-                ], 'label' => 'Tipo'])
+            #->add('tipoaula', 'choice', [
+            #    'choices' => [
+            #        '1' => 'Grado',
+            #        '2' => 'Año'
+            #    ], 'label' => 'Tipo'])
             ->add('seccion')
+            ->add('anio', null, ['label' => 'Plan'])
             ->add('ciclolectivo')
-            ->add('modalidad')
             ->add('_action', null, [
                 'actions' => [
                     'show' => ['label' => 'Informe'],
@@ -142,7 +142,7 @@ final class AulaAdmin extends AbstractAdmin
         $showMapper
             #->add('id')
             #->add('__toString', null, ['label' => 'Aula'])
-            ->add('alumnos', null, array('template' => 'AulaShow/alumnos.html.twig'))
+            ->add('alumnos', null, array('label' => null, 'template' => 'AulaShow/alumnos.html.twig'))
             ;
     }
 

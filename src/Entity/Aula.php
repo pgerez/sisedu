@@ -84,7 +84,9 @@ class Aula
             '4' => '4°',
             '5' => '5°',
             '6' => '6°',
-            '7' => '7°'
+            '7' => '7°',
+            '8' => '8°',
+            '9' => '9°'
         ];
         $seccion = $this->getSeccion() ? '"'.$this->getSeccion().'"' : ' ';
         return (string) $numero[$this->getNumero()].' '.$tipo[$this->getTipoaula()].' '.$seccion.' '.$this->getCiclolectivo();
@@ -96,12 +98,30 @@ class Aula
         foreach($this->getMateriaAulas() as $ma):
             foreach($ma->getNotas() as $nota):
                 foreach($nota->getNotaAlumnos() as $na):
-                    $array[$ma->getAniomateria()->getMateria()->getNombre()][$na->getAlumno()->getApellido().' '.$na->getAlumno()->getNombre()][$nota->getPeriodo()->getNombre()] = $na->getEscala();
+                    if($na->getAlumno()):
+                        $array[$ma->getAniomateria()->getMateria()->getNombre()][$na->getAlumno()->getApellido().' '.$na->getAlumno()->getNombre()][$nota->getPeriodo()->getNombre()] = $na->getNota();
+                    else:
+                        #$permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                        #$array[$ma->getAniomateria()->getMateria()->getNombre()][substr(str_shuffle($permitted_chars), 0, 8)][$nota->getPeriodo()->getNombre()] = $na->getNota();
+                    endif;
                     #$array[$na->getAlumno()][$nota->getPeriodo()] = $na->getEscala();
                 endforeach;
             endforeach;
         endforeach;
         return $array;
+    }
+    
+
+    
+
+    public function getNumeroTipoAnio()
+    {
+        if($this->getTipoaula() == 1):
+            $tipo = 'Año';
+        else:
+            $tipo = 'Grado';
+        endif;
+        return (string) $this->numero.' '.$tipo;
     }
 
     public function getDatosCertificado()

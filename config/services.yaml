@@ -229,3 +229,10 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Localidad }
         public: true
+
+    admin.excel:
+        class: App\Admin\ExcelAdmin
+        arguments: [~, App\Entity\Excel, App\Controller\ExcelAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Excel }
+        public: true

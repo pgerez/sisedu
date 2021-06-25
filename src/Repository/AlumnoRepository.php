@@ -19,22 +19,22 @@ class AlumnoRepository extends ServiceEntityRepository
         parent::__construct($registry, Alumno::class);
     }
 
-    // /**
-    //  * @return Alumno[] Returns an array of Alumno objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Alumno[] Returns an array of Alumno objects
+      */
+    
+    public function findDni($value)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+            ->andWhere('a.dni = :val')
             ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            #->orderBy('a.id', 'ASC')
+            #->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Alumno

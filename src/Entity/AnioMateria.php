@@ -44,7 +44,7 @@ class AnioMateria
     private $anio;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Materia", inversedBy="anioMaterias")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Materia", inversedBy="anioMaterias" ,cascade={"persist"})
      */
     private $materia;
 

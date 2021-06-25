@@ -59,14 +59,24 @@ class NotaAlumno
     private $tipo_nota;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $libro;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $folio;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $examenlibro;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $examenfolio;
 
     public function getId(): ?int
     {
@@ -145,27 +155,52 @@ class NotaAlumno
         return $this;
     }
 
-    public function getLibro(): ?int
+    public function getLibro(): ?string
     {
         return $this->libro;
     }
 
-    public function setLibro(?int $libro): self
+    public function setLibro(?string $libro): self
     {
         $this->libro = $libro;
 
         return $this;
     }
 
-    public function getFolio(): ?int
+    public function getFolio(): ?string
     {
         return $this->folio;
     }
 
-    public function setFolio(?int $folio): self
+    public function setFolio(?string $folio): self
     {
         $this->folio = $folio;
 
         return $this;
     }
+
+    public function getExamenlibro(): ?string
+    {
+        return $this->examenlibro;
+    }
+
+    public function setExamenlibro(?string $examenlibro): self
+    {
+        $this->examenlibro = $examenlibro;
+
+        return $this;
+    }
+
+    public function getExamenfolio(): ?string
+    {
+        return $this->examenfolio;
+    }
+
+    public function setExamenfolio(?string $examenfolio): self
+    {
+        $this->examenfolio = $examenfolio;
+
+        return $this;
+    }
+
 }

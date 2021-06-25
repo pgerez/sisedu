@@ -35,6 +35,7 @@ final class NotaAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper): void
     {
         $listMapper
+        ->add('id')
         ->add('periodo')
         ->add('materiaaula')
         ->add('fecha', null, ['format' => 'd/M/y'])
@@ -87,15 +88,17 @@ final class NotaAdmin extends AbstractAdmin
         $container = $this->getConfigurationPool()->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
         #$object->setAula($object->getMateriaAula()->getAula());
-        foreach($alumnos as $a):
-            #echo $a->getAlumno()->getId();exit;
-            $notaAlumno = new NotaAlumno();
-            $notaAlumno->setNotaId($object);
-            $notaAlumno->setAlumno($a->getAlumno());
-            $notaAlumno->setTipoNota($object->getMateriaAula()->getTipoNota());
-            $em->persist($notaAlumno);
-            $em->flush();
-        endforeach;
+        if($object->getPeriodo()->getId() != 8):
+            foreach($alumnos as $a):
+                #echo $a->getAlumno()->getId();exit;
+                $notaAlumno = new NotaAlumno();
+                $notaAlumno->setNotaId($object);
+                $notaAlumno->setAlumno($a->getAlumno());
+                $notaAlumno->setTipoNota($object->getMateriaAula()->getTipoNota());
+                $em->persist($notaAlumno);
+                $em->flush();
+            endforeach;
+        endif;
     }
 
 
