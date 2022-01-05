@@ -90,6 +90,7 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('fecha_ingreso', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('constancia_titulo')
             ->add('certificado_titulo')
+            ->add('observacion')
             ->add('alumnoTutors', CollectionType::class, array(
                 'by_reference' => false, 'label' => 'Tutor'
             ),

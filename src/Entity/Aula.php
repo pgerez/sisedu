@@ -100,11 +100,12 @@ class Aula
                 foreach($nota->getNotaAlumnos() as $na):
                     if($na->getAlumno()):
                         $array[$ma->getAniomateria()->getMateria()->getNombre()][$na->getAlumno()->getApellido().' '.$na->getAlumno()->getNombre()][$nota->getPeriodo()->getNombre()] = ['numero' => $na->getNota(), 'libro' => $na->getLibro(), 'folio' => $na->getFolio()];
+
                     else:
                         #$permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                         #$array[$ma->getAniomateria()->getMateria()->getNombre()][substr(str_shuffle($permitted_chars), 0, 8)][$nota->getPeriodo()->getNombre()] = $na->getNota();
-                    endif;
-                    #$array[$na->getAlumno()][$nota->getPeriodo()] = $na->getEscala();
+
+                   endif;
                 endforeach;
             endforeach;
         endforeach;

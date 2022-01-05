@@ -9,21 +9,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Certificado;
-// use App\Entity\Alumno;
-// use App\Entity\Tutor;
-// use App\Entity\AlumnoTutor;
-// use App\Entity\AulaAlumno;
-// use App\Entity\Aula;
-// use App\Entity\Anio;
-// use App\Entity\AnioMateria;
-// use App\Entity\Materia;
-// use App\Entity\Localidad;
-// use App\Entity\Nota;
-// use App\Entity\NotaAlumno;
-// use App\Entity\Periodo;
-// use App\Entity\Excel;
-// use App\Entity\Ciclolectivo;
-// use App\Entity\MateriaAula;
+use App\Entity\Alumno;
+use App\Entity\Tutor;
+use App\Entity\AlumnoTutor;
+use App\Entity\AulaAlumno;
+use App\Entity\Aula;
+use App\Entity\Anio;
+use App\Entity\AnioMateria;
+use App\Entity\Materia;
+use App\Entity\Localidad;
+use App\Entity\Nota;
+use App\Entity\NotaAlumno;
+use App\Entity\Periodo;
+use App\Entity\Excel;
+use App\Entity\Ciclolectivo;
+use App\Entity\MateriaAula;
 
 class FrontController extends AbstractController
 {
@@ -355,15 +355,15 @@ class FrontController extends AbstractController
         
     // }
     
-    //  /**
-    //  * @Route("/importNotas", methods={"GET","HEAD"})
-    //  */
-    // public function importNotas()
-    // {
-    //     $dateImmutable = new \DateTime('@'.strtotime('now'));
-    //     ini_set('max_execution_time', 40000);
+      /**
+      * @Route("/importNotas", methods={"GET","HEAD"})
+      */
+     public function importNotas()
+     {
+         $dateImmutable = new \DateTime('@'.strtotime('now'));
+         ini_set('max_execution_time', 40000);
             
-    //         $em = $this->getDoctrine()->getManager();
+             $em = $this->getDoctrine()->getManager();
 
 
     //         // $aulas = $em->getRepository(Aula::class)->findAll();
@@ -377,32 +377,30 @@ class FrontController extends AbstractController
     //         //             $alumnos = $materiaaula->getAula()->getAulaAlumnos();
                     
     //         //             foreach($alumnos as $a):
-    //                     $excels = $em->getRepository(Excel::class)->findPrevias();
+                         $excels = $em->getRepository(Excel::class)->findPrevias();
                             
-    //                     foreach($excels as $excel):
-    //                         echo $excel->getId().'<br>';
-    //                         $materiaaulas = $em->getRepository(MateriaAula::class)->findByCodmateriaCursoPlanYear($excel->getCol1(),$excel->getCol2(),$excel->getCol3(),$excel->getCol13());
-    //                         foreach($materiaaulas as $materiaaula):
-    //                             $nota = new Nota();
-    //                             $nota->setPeriodo($em->getRepository(Periodo::class)->find(8));
-    //                             $nota->setMateriaAula($materiaaula);
-    //                             $nota->setFecha(\DateTime::createFromFormat('m/d/Y', $excel->getCol15()));
-    //                             $em->persist($nota);
-    //                             $em->flush();
-
-
-    //                             $notaAlumno = new NotaAlumno();
-    //                             $notaAlumno->setNotaId($nota);
-    //                             $notaAlumno->setAlumno($em->getRepository(Alumno::class)->findDni($excel->getCol0()));
-    //                             $notaAlumno->setTipoNota($nota->getMateriaaula()->getTipoNota());
-    //                             $notaAlumno->setNota($excel->getCol14());
-    //                             $notaAlumno->setExamenlibro($excel->getCol16());
-    //                             $notaAlumno->setExamenfolio($excel->getCol17());
-    //                             $em->persist($notaAlumno);
-    //                             $em->flush();
-    //                         endforeach;
-    //                     endforeach;
+                         foreach($excels as $excel):
+                             echo $excel->getCol0().' - '.$excel->getCol1().' - '.$excel->getCol2().' - '.$excel->getCol3().' - '.$excel->getCol4().' - '.$excel->getCol5().' - '.$excel->getCol6().' - '.$excel->getCol7().' - '.$excel->getCol8().' - '.$excel->getCol9().' - '.$excel->getCol10().'<br>';
+                             $notaAlumno = $em->getRepository(NotaAlumno::class)->findByCodmateriaCursoPlanYearAlumno($excel->getCol0(),$excel->getCol1(),$excel->getCol2(),$excel->getCol3(),$excel->getCol13());
+                             foreach($notaAlumno as $n):
+                                echo $n->getId().'<br>';
+                                
+                                #foreach($materiaaula->get; $i <= 7; $i++):
+                                #echo dump($materiaaula);exit;
+                                   /*  $notaAlumno = new NotaAlumno();
+                                    $notaAlumno->setNotaId($nota);
+                                    $notaAlumno->setAlumno($em->getRepository(Alumno::class)->findDni($excel->getCol0()));
+                                    $notaAlumno->setTipoNota($nota->getMateriaaula()->getTipoNota());
+                                    $notaAlumno->setNota($excel->getCol14());
+                                    $notaAlumno->setExamenlibro($excel->getCol16());
+                                    $notaAlumno->setExamenfolio($excel->getCol17());
+                                    $em->persist($notaAlumno);
+                                    $em->flush(); */
+                                #endfor;
+                             endforeach;
+                             exit;
+                         endforeach;
         
-    // }
+     }
     
 }
