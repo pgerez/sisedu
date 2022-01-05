@@ -36,8 +36,8 @@ final class TutorAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('nombre')
             ->add('apellido')
+            ->add('nombre')
             ->add('dni')
             ->add('telefono')
             ->add('email')
@@ -53,8 +53,8 @@ final class TutorAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
-            ->add('nombre')
             ->add('apellido')
+            ->add('nombre')
             ->add('genero', ChoiceType::class, [
                 'choices' => [
                     'Masculino' => '1',
@@ -70,8 +70,8 @@ final class TutorAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('nombre')
             ->add('apellido')
+            ->add('nombre')
             ->add('dni')
             ->add('telefono')
             ->add('email')

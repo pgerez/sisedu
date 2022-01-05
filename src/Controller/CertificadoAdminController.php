@@ -143,6 +143,7 @@ final class CertificadoAdminController extends CRUDController
         ##datos ciclo lectivo#####
         $ciclo = 'xxxx';
         $nivel = 'xxxx';
+        $cicloyear = 'xxxx';
         foreach($certificado->getAlumno()->getAulaAlumnos() as $aula)
         {
             if($certificado->getCiclolectivo() == $aula->getAula()->getCiclolectivo()->getYear()):

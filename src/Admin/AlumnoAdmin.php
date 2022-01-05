@@ -45,9 +45,11 @@ final class AlumnoAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('nombre')
+            ->add('legajo')
             ->add('apellido')
+            ->add('nombre')
             ->add('dni')
+            ->add('cuit')
             ->add('domicilio')
             ->add('telefono')
             ->add('email')
@@ -65,29 +67,30 @@ final class AlumnoAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper): void
     {
         $formMapper
+            ->add('legajo')
             ->add('apellido')
             ->add('nombre')
             ->add('dni')
             ->add('cuit')
+            ->add('domicilio')
+            ->add('localidad')
+            ->add('telefono')
+            ->add('email')
+            ->add('fecha_nacimiento', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('genero', ChoiceType::class, [
                 'choices' => [
                     'Masculino' => '1',
                     'Femenino' => '2'
                 ]])
-            ->add('domicilio')
-            ->add('telefono')
-            ->add('email')
-            ->add('fecha_nacimiento', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('lugar_nacimiento', null, ['label' => 'Lugar de Nacimiento'])
-            ->add('fecha_ingreso', DatePickerType::class, ['format' => 'd/M/y'])
-            ->add('legajo')
-            ->add('localidad')
             ->add('nacionalidad', ChoiceType::class, [
                 'choices' => [
                     'ARGENTINO' => '1',
                 ]])
+            ->add('fecha_ingreso', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('constancia_titulo')
             ->add('certificado_titulo')
+            ->add('observacion')
             ->add('alumnoTutors', CollectionType::class, array(
                 'by_reference' => false, 'label' => 'Tutor'
             ),
@@ -103,7 +106,7 @@ final class AlumnoAdmin extends AbstractAdmin
     {
         $showMapper
             #->add('id')
-            ->add('academica', null, array('template' => 'Alumno/academica.html.twig'))
+            ->add('academica', null, array('template' => 'Alumno/academica.html.twig', 'label' => 'Historia Academica'))
             
             ;
     }

@@ -42,8 +42,8 @@ class ExcelRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             #->select('e.col13, e.col3, e.col2')
-            ->andWhere('e.col14 <> 0')
-            ->andWhere("e.col14 <> ''")
+            ->andWhere('e.col14 = 0')
+            ->andWhere("e.col14 = ''")
             #->setMaxResults(10)
             ->getQuery()
             ->getResult()

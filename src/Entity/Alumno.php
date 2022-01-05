@@ -175,7 +175,7 @@ class Alumno
 
     public function getDni(): ?string
     {
-        return $this->dni;
+        return number_format($this->dni, null, null, ".");
     }
 
     public function setDni(string $dni): self
