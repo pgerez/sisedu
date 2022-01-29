@@ -23,7 +23,7 @@ class AlumnoTutor
     /**
      * 
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"}, inversedBy="alumnoTutors")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
      * })

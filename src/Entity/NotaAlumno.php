@@ -29,7 +29,7 @@ class NotaAlumno
     /**
      * 
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Nota", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Nota", cascade={"persist"}, inversedBy="notaAlumnos")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="nota_id", referencedColumnName="id")
      * })
@@ -40,7 +40,7 @@ class NotaAlumno
         /**
      * 
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"}, inversedBy="notaalumnos")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
      * })

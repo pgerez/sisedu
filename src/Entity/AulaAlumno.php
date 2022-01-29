@@ -19,7 +19,7 @@ class AulaAlumno
     /**
      * 
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"}, inversedBy="aulaAlumnos")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
      * })
@@ -30,7 +30,7 @@ class AulaAlumno
     /**
      * 
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Aula", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Aula", cascade={"persist"}, inversedBy="aulaAlumnos")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="aula_id", referencedColumnName="id")
      * })

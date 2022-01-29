@@ -39,7 +39,7 @@ class Certificado
     /**
      * 
      * @Assert\NotBlank()
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Alumno", cascade={"persist"}, inversedBy="certificados")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="alumno_id", referencedColumnName="id")
      * })

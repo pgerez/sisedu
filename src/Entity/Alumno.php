@@ -81,6 +81,11 @@ class Alumno
     private $localidad;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ciclolectivo", inversedBy="alumnos")
+     */
+    private $ciclolectivo;
+
+    /**
      * @ORM\Column(type="date", nullable=true)
      */
     private $fecha_nacimiento;
@@ -486,6 +491,18 @@ class Alumno
                 $notaalumno->setAlumno(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCiclolectivo(): ?Ciclolectivo
+    {
+        return $this->ciclolectivo;
+    }
+
+    public function setCiclolectivo(?Ciclolectivo $ciclolectivo): self
+    {
+        $this->ciclolectivo = $ciclolectivo;
 
         return $this;
     }
