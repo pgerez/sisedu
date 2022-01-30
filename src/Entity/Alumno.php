@@ -5,8 +5,11 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ * @UniqueEntity("dni")
+ * @UniqueEntity("legajo")
  * @ORM\Entity(repositoryClass="App\Repository\AlumnoRepository")
  */
 class Alumno
@@ -180,7 +183,7 @@ class Alumno
 
     public function getDni(): ?string
     {
-        return number_format($this->dni, null, null, ".");
+        return $this->dni;
     }
 
     public function setDni(string $dni): self

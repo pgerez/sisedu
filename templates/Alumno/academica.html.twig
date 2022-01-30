@@ -1,67 +1,80 @@
-{% extends '@SonataAdmin/CRUD/base_show_field.html.twig' %} 
-
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
 {% set cl = {'00' : 'success', 999 : 'primary', 3 : 'danger', 4 : 'info', 5 : 'warning', 6 : 'danger', 7 : 'success'} %}
+{% block sonata_admin_content %}
 {% block field%}
     {# object.venta.financiacion.cuotas #}
+            <h4><strong>{{object}}</strong></h4>
             <ul class="nav nav-tabs" id="academica-table">
                 {% for aulaalumno in object.aulaAlumnos %}
                         <li>
-                            <a data-toggle="tab" href="#{{aulaalumno.aula.id}}">{{aulaalumno.aula.numero}}º Año<br>{{aulaalumno.aula.anio.planestudio}}</a>
+                            <a data-toggle="tab" href="#{{aulaalumno.aula.id}}">{{aulaalumno.aula.numero}}º Año [{{aulaalumno.aula.ciclolectivo.year}}]<br>{{aulaalumno.aula.anio.planestudio}}</a>
                         </li>
                 {% endfor %}
             </ul>
-                <div class="tab-content" >
-                    `{% for aulaalumno in object.aulaAlumnos %}
-                        <div class="tab-pane fade" id="{{aulaalumno.aula.id}}">
-                            <table  class="table" cellspacing="0">
-                                    {% for key, materia in aulaalumno.aula.showArray %}
-                                        {% set i = 0 %}
-                                        {% set a = 0 %}
-                                        {% set p = '' %}
-                                        <thead>
-                                        <tr>
-                                            <th colspan="8"><h3>{{key}}</h3></th>
-                                        </tr>
-                                        <tr>
-                                            <th bgcolor="#adb5bd">Alumno</th>
-                                            {% set per = [] %}
-                                            {% for key, periodo in materia %}
-                                                {% for key, nota in periodo %}
-                                                        {% if (key not in per) %}
-                                                                <th bgcolor="#adb5bd" style='text-align : center;'>{{key}}</th>
-                                                            {% set per = per|merge([key]) %}
-                                                        {% endif %}
-                                                {% endfor %}
-                                            {% endfor %}
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for key, periodo in materia %}
-                                                {% if (key == (object.apellido ~' '~ object.nombre)) %}
-                                                <tr>
-                                                    {% if i == 0 %}
-                                                        <td align='center'>{{key}}</td>
-                                                        {% set i = 1 %}    
-                                                    {% endif %}
-                                                    {% for key, nota in periodo %}
-                                                        {% if (nota.numero < 6) %}
-                                                            {% set p = 'color:#FF0000' %}
-                                                        {% else %}
-                                                            {% set p = 'color:#000000' %}
-                                                        {% endif %}
-                                                        <td align='center'><p style={{p}};><strong>{{nota.numero}}</strong></p>(L:{{nota.libro}})(F:{{nota.folio}})</td>
-                                                    {% endfor %}
-                                                </tr>
-                                                {% endif %}   
-                                                {% set i = 0 %}
-                                            {% endfor %}
-                                        </tbody>
-                                            {% set a = 0 %}
-                                    {% endfor %}
+            <div class="tab-content" >
+                {% set au = 0 %}
+                {% set aula = 0 %}
+                {% set ma = 0 %}
+                {% set mat = '' %}
+                {% for ha in hacademica %}
+                    {# para pestanias ocultas por aula#}
+                    {% if aula != ha.idaula %}
+                        {% if au == 0 %}    
+                            <div class="tab-pane fade" id="{{ha.idaula}}">
+                            <table  class="table" cellspacing="0" border="1">
+                            <tr>
+                                <td colspan="8">
+                                    <h4>LIBRO <strong>{{ha.libro}}</strong> FOLIO <strong>{{ha.folio}}</strong></h4>
+                                </td>
+                            </tr>
+                            {% set au = 1 %}
+                        {% else %}
                             </table>
-                        </div>
-                    {% endfor %}
-                </div>
+                            </div>
+                            <div class="tab-pane fade" id="{{ha.idaula}}">
+                            <table  class="table" cellspacing="0" border="1">
+                            <tr>
+                                <td colspan="8">
+                                    <h4>LIBRO <strong>{{ha.libro}}</strong> FOLIO <strong>{{ha.folio}}</strong></h4>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% set aula = ha.idaula %}
+                    {% endif %}
+                    {#fin pestanias ocultas#}
+                    {#impresion de notas#}
+                    {% if mat != ha.materia %}
+                        {% if ma == 0 %}
+                        <tr>
+                            <td colspan="8" bgcolor="#adb5bd" style='text-align : left;'>
+                                <h4><i>{{ ha.materia }}</i></h4>
+                            </td>
+                        </tr>
+                        <tr>
+                        {% set ma = 1 %}
+                        {% else %}
+                        </tr>
+                        <tr>
+                            <td colspan="8" bgcolor="#adb5bd" style='text-align : left;'>
+                                <h4><i>{{ ha.materia }}</i></h4>
+                            </td>
+                        </tr>
+                        <tr>
+                        {% endif %}
+                        {% set mat = ha.materia %}
+                    {% endif %}
+                    {% if (ha.nota < 6) %}
+                        {% set p = 'color:#FF0000' %}
+                    {% else %}
+                        {% set p = 'color:#000000' %}
+                    {% endif %}
+                    <td width="10%">
+                        <div align="center">{{ha.periodo}}<br><p style={{p}};><strong>{{ha.nota}}</strong></p></div>
+                    </td>
+                {% endfor %}
+                </tr>
+                </table>
+                </div> 
             </div>
-        </div>
+{% endblock %}           
 {% endblock %}

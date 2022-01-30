@@ -19,7 +19,7 @@ final class AlumnoAdmin extends AbstractAdmin
 {
     protected function configureRoutes(RouteCollection $collection)
     {
-        #$collection->add('academica', $this->getRouterIdParameter().'/academica');
+        $collection->add('academica', $this->getRouterIdParameter().'/academica');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
@@ -59,7 +59,7 @@ final class AlumnoAdmin extends AbstractAdmin
                     'show' => ['label' => 'Academica'],
                     'edit' => [],
                     'delete' => [],
-                    #'Academica'  => ['template' => 'botones/academica.html.twig'],
+                    'Academica'  => ['template' => 'botones/academica.html.twig'],
                 ],
             ]);
     }
@@ -106,7 +106,7 @@ final class AlumnoAdmin extends AbstractAdmin
     {
         $showMapper
             #->add('id')
-            ->add('academica', null, array('template' => 'Alumno/academica.html.twig', 'label' => 'Historia Academica'))
+            #->add('academica', null, array('template' => 'Alumno/academica.html.twig', 'label' => 'Historia Academica'))
             
             ;
     }
