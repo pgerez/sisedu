@@ -20,6 +20,16 @@ final class AulaAdmin extends AbstractAdmin
         $this->parentAssociationMapping = 'ciclolectivo';
     }
 
+    protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
+    {
+        $rootAlias = current($query->getRootAliases());
+
+        $query->addOrderBy($rootAlias.'.numero', 'ASC');
+        $query->addOrderBy($rootAlias.'.seccion', 'ASC');
+
+        return $query;
+    }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
     {
         $datagridMapper
@@ -113,6 +123,7 @@ final class AulaAdmin extends AbstractAdmin
                     )
                 ->add('seccion')
                 ->add('modalidad')
+                ->add('cantidad', null, ['label' => 'Cantidad de Alumnos'])
             ->end()
             ->with('Alumnos')
                 ->add('aulaAlumnos', CollectionType::class, array(

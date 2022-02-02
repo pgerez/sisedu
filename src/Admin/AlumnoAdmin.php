@@ -20,6 +20,8 @@ final class AlumnoAdmin extends AbstractAdmin
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->add('academica', $this->getRouterIdParameter().'/academica');
+        $collection->add('inscripciones', $this->getRouterIdParameter().'/inscripciones');
+        $collection->add('listar', 'listar');
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper): void
@@ -29,7 +31,8 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('nombre')
             ->add('apellido')
             ->add('dni')
-            #->add('aulaAlumnos.aula',null, ['label' => 'Aula/Curso'])
+            ->add('legajo')
+            ->add('aulaAlumnos.aula',null, ['label' => 'Aula/Curso'])
             ->add('genero', null, array(), ChoiceType::class, [
                 'choices' => [
                     'Masculino' => '1',
@@ -56,10 +59,11 @@ final class AlumnoAdmin extends AbstractAdmin
             ->add('alumnoTutors', null, ['label'=>'Tutor'])
             ->add('_action', null, [
                 'actions' => [
-                    'show' => ['label' => 'Academica'],
+                    #'show' => ['label' => 'Academica'],
                     'edit' => [],
                     'delete' => [],
                     'Academica'  => ['template' => 'botones/academica.html.twig'],
+                    'Inscribir'  => ['template' => 'botones/inscripcion.html.twig'],
                 ],
             ]);
     }

@@ -39,6 +39,11 @@ class Ciclolectivo
     private $descripcion;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activo = 0;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Aula", mappedBy="ciclolectivo")
      */
     private $aulas;
@@ -207,6 +212,18 @@ class Ciclolectivo
                 $planestudioCliclolectivo->setCiclolectivo(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActivo(): ?bool
+    {
+        return $this->activo;
+    }
+
+    public function setActivo(bool $activo): self
+    {
+        $this->activo = $activo;
 
         return $this;
     }

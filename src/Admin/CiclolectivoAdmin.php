@@ -33,6 +33,7 @@ final class CiclolectivoAdmin extends AbstractAdmin
             ->add('fecha_inicio')
             ->add('fecha_fin')
             ->add('descripcion')
+            ->add('activo')
             ->add('_action', null, [
                 'actions' => [
                     'show' => [],
@@ -51,6 +52,7 @@ final class CiclolectivoAdmin extends AbstractAdmin
             ->add('fecha_inicio', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('fecha_fin', DatePickerType::class, ['format' => 'd/M/y'])
             ->add('descripcion')
+            ->add('activo')
             ;
     }
 

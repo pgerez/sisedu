@@ -1,0 +1,73 @@
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+{% set cl = {'00' : 'success', 999 : 'primary', 3 : 'danger', 4 : 'info', 5 : 'warning', 6 : 'danger', 7 : 'success'} %}
+{% block sonata_admin_content %}
+{% block field%}
+
+{% if object.aulaAlumnos|length > 0 %}
+    {% set aula = object.aulaAlumnos | last %}
+{% else %}
+    {% set aula = { aula:"Sin Registros..." } %}
+{% endif %}
+
+<h4>Inscripcion de Alumno</h4>
+<div class="box box-solid box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">{{object}} </h3>
+    <div class="box-tools pull-rigth">
+      <h4><span class="label label-warning">{{aula.aula}}</span></h4>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  {% block body %}
+  <div class="box-body">
+    <form name="inscribir" id="inscribir" src="{{admin.generateUrl('inscripciones', {'id': object.id})}}" method="GET" class="was-validated">
+      <div class="form-group">
+        <label for="exampleInputEmail1">CURSO</label><br>
+        <select class="form-control" name="aulas" id="aulas" >
+            <option value="0">SIN SELECCION</option>
+            {% for aula in aulas %}
+                <option value="{{aula.id}}">{{aula}}</option>
+            {% endfor %}
+        </select>
+        {% if error == 1 %}
+            <div class="invalid-feedback d-block">Debe seleccionar un <strong>Aula</strong>...</div>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-success">Inscribir</button>
+    </form>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer" id="lista">
+  </div>
+
+
+<script>
+var separador = '';
+var lista_exceptuados = '';
+
+$("#aulas").change(function()
+ {    
+    var id = $("#aulas").val();
+    $.ajax({
+        url: "{{ admin.generateUrl('listar') }}",
+        type: "post",
+        data: {aula_id: id } ,
+            beforeSend: function( xhr ) {
+                            $( "#loader").html('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
+                    },
+            success: function (response) {                  
+                            $('#lista').html(response);
+                            $( "#loader" ).html('');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+            // Error
+                    $( "#loader" ).html('Error obteniendo datos...');
+        }
+    }); 
+});
+
+</script>  
+
+{% endblock %}
+{% endblock %}           
+{% endblock %}

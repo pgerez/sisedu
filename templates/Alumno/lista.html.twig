@@ -1,0 +1,35 @@
+<div class="card-body">
+<table class="table table-striped table-hover">
+        {% set cantidad = 0 %}
+        {% set cupo = '' %}
+        {% if lista|length > 0 %}
+        <thead>
+                <tr>
+                    <th></th>
+                    <th>Apellido y Nombre</th>
+                    <th>Dni</th>
+                </tr>
+        </thead>
+        {% set cupo = 'Cupo: ' ~ ca %}
+        {% else %}
+            SIN RESULTADOS...
+        {% endif %}
+        <tbody>
+        {% set c = 0 %}
+        {% for alumno in lista %}
+            {% set c = c + 1%}
+            <tr> 
+                <td><strong>{{c}}</strong></td>           
+                <td>{{ alumno.apellido }}, {{alumno.nombre}}</td>
+                <td>{{ alumno.dni }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>{{cupo}}</th>
+                <td></td>
+            </tr>
+        </tfood>
+</table>
+</div>

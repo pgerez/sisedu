@@ -19,22 +19,22 @@ class AulaRepository extends ServiceEntityRepository
         parent::__construct($registry, Aula::class);
     }
 
-    // /**
-    //  * @return Aula[] Returns an array of Aula objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Aula[] Returns an array of Aula objects
+      */
+    
+    public function findByCiclolectivo()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+            ->join('a.ciclolectivo',  'c','WITH','a.ciclolectivo = c.id')
+            ->andWhere('c.activo = 1')
             ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            #->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Aula

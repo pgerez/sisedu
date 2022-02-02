@@ -44,6 +44,11 @@ class Aula
     private $numero;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cantidad;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\AulaAlumno", mappedBy="aula", cascade={"all"}, orphanRemoval=true)
      */
     private $aulaAlumnos;
@@ -294,6 +299,18 @@ class Aula
                 $materiaAula->setAula(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCantidad(): ?int
+    {
+        return $this->cantidad;
+    }
+
+    public function setCantidad(?int $cantidad): self
+    {
+        $this->cantidad = $cantidad;
 
         return $this;
     }
