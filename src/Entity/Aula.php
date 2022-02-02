@@ -93,7 +93,7 @@ class Aula
             '8' => '8°',
             '9' => '9°'
         ];
-        $seccion = $this->getSeccion() ? '"'.$this->getSeccion().'"' : ' ';
+        $seccion = $this->getSeccion() ? '"'.$this->getSeccion().' Division"' : ' ';
         return (string) $numero[$this->getNumero()].' '.$tipo[$this->getTipoaula()].' '.$seccion.' '.$this->getCiclolectivo();
     }
 

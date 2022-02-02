@@ -27,8 +27,10 @@ class AulaRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->join('a.ciclolectivo',  'c','WITH','a.ciclolectivo = c.id')
+            #->join('a.seccion',  's','WITH','a.seccion = s.id')
             ->andWhere('c.activo = 1')
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('a.numero, a.seccion', 'ASC')
+            #->orderBy('a.seccion', 'ASC')
             #->setMaxResults(10)
             ->getQuery()
             ->getResult()

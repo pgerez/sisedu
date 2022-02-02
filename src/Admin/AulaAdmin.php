@@ -20,13 +20,16 @@ final class AulaAdmin extends AbstractAdmin
         $this->parentAssociationMapping = 'ciclolectivo';
     }
 
-    protected function configureQuery(ProxyQueryInterface $query): ProxyQueryInterface
+    public function createQuery($context = 'list')
     {
+
+        $query = parent::createQuery($context);
         $rootAlias = current($query->getRootAliases());
-
-        $query->addOrderBy($rootAlias.'.numero', 'ASC');
-        $query->addOrderBy($rootAlias.'.seccion', 'ASC');
-
+        $query
+            ->join($rootAlias.'.seccion', 's', 'WITH', $rootAlias.'.seccion = s.id')
+            ->join($rootAlias.'.ciclolectivo', 'c', 'WITH', $rootAlias.'.ciclolectivo = c.id')
+            ->addOrderBy($rootAlias.'.numero, s.letra', 'ASC')
+            ->where(' c.activo = 1');
         return $query;
     }
 
@@ -68,13 +71,13 @@ final class AulaAdmin extends AbstractAdmin
                     '5' => '5°',
                     '6' => '6°',
                     '7' => '7°'
-                ]])
+                ],  'label' => 'Año'])
             #->add('tipoaula', 'choice', [
             #    'choices' => [
             #        '1' => 'Grado',
             #        '2' => 'Año'
             #    ], 'label' => 'Tipo'])
-            ->add('seccion')
+            ->add('seccion', null, ['label' => 'Division'])
             ->add('anio', null, ['label' => 'Plan'])
             ->add('ciclolectivo')
             ->add('_action', null, [
@@ -103,7 +106,7 @@ final class AulaAdmin extends AbstractAdmin
             #->add('id')
             ->with('Aula')
                 ->add('ciclolectivo')
-                ->add('anio')
+                ->add('anio', null, ['label' => 'Plan'])
                 ->add('numero', ChoiceType::class, [
                     'choices' => [
                         '1°' => '1',
@@ -113,7 +116,7 @@ final class AulaAdmin extends AbstractAdmin
                         '5°' => '5',
                         '6°' => '6',
                         '7°' => '7'
-                        ]]
+                    ], 'label' => 'Año']
                     )
                 ->add('tipoaula', ChoiceType::class, [
                     'choices' => [
@@ -121,7 +124,7 @@ final class AulaAdmin extends AbstractAdmin
                         'Año' => '2'
                         ]]
                     )
-                ->add('seccion')
+                ->add('seccion', null, ['label' => 'Division'])
                 ->add('modalidad')
                 ->add('cantidad', null, ['label' => 'Cantidad de Alumnos'])
             ->end()
