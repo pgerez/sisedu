@@ -62,7 +62,7 @@ final class NotaAdmin extends AbstractAdmin
             $formMapper
                 ->with('Alumnos')
                     ->add('notaAlumnos', CollectionType::class, array(
-                        'by_reference' => false, 'label' => false, 'btn_add' => false,  
+                        'by_reference' => false, 'label' => false,  
                         ),
                             array(
                                 'edit' => 'inline',
@@ -84,11 +84,11 @@ final class NotaAdmin extends AbstractAdmin
     public function prePersist($object)
     {
         // remove extra white spaces
-        $alumnos = $object->getMateriaAula()->getAula()->getAulaAlumnos();
-        $container = $this->getConfigurationPool()->getContainer();
-        $em = $container->get('doctrine.orm.entity_manager');
-        #$object->setAula($object->getMateriaAula()->getAula());
-        if($object->getPeriodo()->getId() != 8):
+        if($object->getPeriodo()->getId() == 1 or $object->getPeriodo()->getId() == 2):
+            $alumnos = $object->getMateriaAula()->getAula()->getAulaAlumnos();
+            $container = $this->getConfigurationPool()->getContainer();
+            $em = $container->get('doctrine.orm.entity_manager');
+            #$object->setAula($object->getMateriaAula()->getAula());
             foreach($alumnos as $a):
                 #echo $a->getAlumno()->getId();exit;
                 $notaAlumno = new NotaAlumno();

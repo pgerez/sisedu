@@ -138,6 +138,11 @@ class Alumno
      */
     private $materia_adeudada;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Repitente", mappedBy="alumno", cascade={"persist"})
+     */
+    private $repitentes;
+
 
 
     public function __construct()
@@ -146,6 +151,7 @@ class Alumno
         $this->certificados = new ArrayCollection();
         $this->aulaAlumnos = new ArrayCollection();
         $this->notaalumnos = new ArrayCollection();
+        $this->repitentes = new ArrayCollection();
     }
 
     public function __toString(){
@@ -506,6 +512,37 @@ class Alumno
     public function setCiclolectivo(?Ciclolectivo $ciclolectivo): self
     {
         $this->ciclolectivo = $ciclolectivo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Repitente[]
+     */
+    public function getRepitentes(): Collection
+    {
+        return $this->repitentes;
+    }
+
+    public function addRepitente(Repitente $repitente): self
+    {
+        if (!$this->repitentes->contains($repitente)) {
+            $this->repitentes[] = $repitente;
+            $repitente->setAlumno($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRepitente(Repitente $repitente): self
+    {
+        if ($this->repitentes->contains($repitente)) {
+            $this->repitentes->removeElement($repitente);
+            // set the owning side to null (unless already changed)
+            if ($repitente->getAlumno() === $this) {
+                $repitente->setAlumno(null);
+            }
+        }
 
         return $this;
     }

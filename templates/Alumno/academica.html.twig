@@ -3,7 +3,17 @@
 {% block sonata_admin_content %}
 {% block field%}
     {# object.venta.financiacion.cuotas #}
-            <h4><strong>{{object}}</strong></h4>
+<div class="box box-solid box-primary">
+  <div class="box-header with-border">
+    <h3 class="box-title">{{object}} </h3>
+    <div class="box-tools pull-rigth" >
+      <h4><span class="label label-danger" title="Informacion de Esculea en las que Repitente">
+      {% for repitente in object.repitentes %}
+            {{repitente}} | 
+      {% endfor %}
+      </span></h4>
+    </div>
+  </div>
             <ul class="nav nav-tabs" id="academica-table">
                 {% for aulaalumno in object.aulaAlumnos %}
                         <li>
@@ -76,5 +86,6 @@
                 </table>
                 </div> 
             </div>
+</div>
 {% endblock %}           
 {% endblock %}
