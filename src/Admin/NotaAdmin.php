@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\CollectionType;
+use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\CoreBundle\Form\Type\DatePickerType;
 use Evercode\DependentSelectBundle\Form\Type\DependentFilteredEntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -54,7 +55,7 @@ final class NotaAdmin extends AbstractAdmin
         $formMapper
             ->with('Carga de Notas')
                 ->add('periodo')
-                ->add('materiaaula', null, ['disabled' => $this->getSubject()->getId()? true : false])
+                ->add('materiaaula', ModelListType::class, ['disabled' => $this->getSubject()->getId()? true : false, 'label' => 'Materia'])
                 ->add('fecha', DatePickerType::class, ['format' => 'd/M/y'])
             ->end()
         ;

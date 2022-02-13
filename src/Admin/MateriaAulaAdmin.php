@@ -28,6 +28,7 @@ final class MateriaAulaAdmin extends AbstractAdmin
             ->add('nota_minima')
             ->add('asistencia')
             ->add('cantidad')
+            ->add('aula')
             ;
     }
 
@@ -36,6 +37,7 @@ final class MateriaAulaAdmin extends AbstractAdmin
         $listMapper
             #->add('id')
             ->add('aniomateria.materia', null, ['label' => 'Materia'])
+            ->add('aula')
             ->add('docente')
             ->add('nota_minima')
             ->add('asistencia','choice', [

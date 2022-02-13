@@ -29,7 +29,7 @@ final class AulaAdmin extends AbstractAdmin
             ->join($rootAlias.'.seccion', 's', 'WITH', $rootAlias.'.seccion = s.id')
             ->join($rootAlias.'.ciclolectivo', 'c', 'WITH', $rootAlias.'.ciclolectivo = c.id')
             ->addOrderBy($rootAlias.'.numero, s.letra', 'ASC')
-            ->where(' c.activo = 1');
+            ->where(' c.activo = 1 and '.$rootAlias.'.seccion = null');
         return $query;
     }
 
