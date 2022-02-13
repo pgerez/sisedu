@@ -26,10 +26,10 @@ final class AulaAdmin extends AbstractAdmin
         $query = parent::createQuery($context);
         $rootAlias = current($query->getRootAliases());
         $query
-            ->join($rootAlias.'.seccion', 's', 'WITH', $rootAlias.'.seccion = s.id')
+            #->join($rootAlias.'.seccion', 's', 'WITH', $rootAlias.'.seccion = s.id')
             ->join($rootAlias.'.ciclolectivo', 'c', 'WITH', $rootAlias.'.ciclolectivo = c.id')
-            ->addOrderBy($rootAlias.'.numero, s.letra', 'ASC')
-            ->where(' c.activo = 1 or '.$rootAlias.'.seccion is null');
+            #->addOrderBy($rootAlias.'.numero, s.letra', 'ASC')
+            ->where(' c.activo = 1 ');
         return $query;
     }
 
